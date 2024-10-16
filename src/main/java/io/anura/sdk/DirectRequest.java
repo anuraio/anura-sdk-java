@@ -2,6 +2,10 @@ package io.anura.sdk;
 
 import java.util.HashMap;
 
+/**
+ * A POJO that represents an API request to be sent to the Anura Direct API.
+ * It is used by {@link  AnuraDirect}
+ */
 public class DirectRequest {
     private String instanceId;
     private String source;

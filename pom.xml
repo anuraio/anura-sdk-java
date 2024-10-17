@@ -6,7 +6,33 @@
 
     <groupId>io.anura</groupId>
     <artifactId>anura-sdk-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>The Anura SDK for Java allows developers to easily integrate and use the Anura Direct API within their Java applications.</description>
+    <url>https://docs.anura.io</url>
+
+    <developers>
+        <developer>
+            <name>Xavier Mejia</name>
+            <email>xmejia@anura.io</email>
+            <organization>Anura Solutions, LLC.</organization>
+            <organizationUrl>https://www.anura.io</organizationUrl>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The GNU General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git@github.com:anuraio/anura-sdk-java.git</connection>
+        <developerConnection>scm:git@github.com:anuraio/anura-sdk-java.git</developerConnection>
+        <url>https://github.com/anuraio/anura-sdk-java</url>
+    </scm>
 
     <build>
         <plugins>

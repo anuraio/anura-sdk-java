@@ -81,7 +81,7 @@ public class DirectRequestBuilder {
 
     /**
      * Sets this {@link DirectRequest}'s IP address. Necessary for all requests used by {@link AnuraDirect}.
-     * Both IPv4 & IPv6 addresses are supported.
+     * Both IPv4 and IPv6 addresses are supported.
      *
      * @param ipAddress     the IP address to set
      * @return              this builder

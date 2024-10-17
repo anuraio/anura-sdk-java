@@ -43,7 +43,8 @@ import io.anura.sdk.*;
 import io.anura.sdk.exceptions.*;
 import java.util.HashMap;
 
-// AnuraDirect constructor takes one boolean parameter - whether to use HTTPS or not for API calls to Anura Direct.
+// AnuraDirect constructor takes one parameter (a boolean) - whether to use HTTPS or not for API calls to Anura Direct.
+// If false is given to the constructor, the API client will use HTTP instead of HTTPS.
 AnuraDirect direct = new AnuraDirect(true);
 ```
 

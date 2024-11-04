@@ -48,7 +48,7 @@ import java.util.HashMap;
 AnuraDirect direct = new AnuraDirect(true);
 ```
 
-### Create an DirectRequest object for AnuraDirect client
+### Create a DirectRequest object for AnuraDirect client
 
 ```java
 DirectRequestBuilder builder = new DirectRequestBuilder();
@@ -112,3 +112,127 @@ try {
 
 
 ```
+## API Reference
+### AnuraDirect
+Can get results from Anura Direct. These results are fetched using Direct's `/direct.json` API endpoint.
+
+#### Methods
+**`DirectResult getResult(DirectRequest request)`**
+- Gets a result from AnuraDirect. Throws an exception if an error occurs throughout the result fetching process.
+- Exceptions Thrown:
+    - `IOException`: if an I/O error occurs when sending or receiving from Anura Direct
+    - `InterruptedException`: if the request/response process with the Anura Direct API is interrupted
+    - `AnuraException`: if a 4XX, 5XX, or any unknown response is returned from Anura Direct
+
+**`boolean isUseHttps()`**
+- Returns whether the AnuraDirect client is using HTTPS or HTTP when calling the Anura Direct API
+
+**`void setUseHttps(boolean useHttps)`**
+- Sets the AnuraDirect to use the HTTPS or HTTP endpoint for calling the Anura Direct API.
+
+### DirectResult
+The result upon a successful call to `getResult()` from the `AnuraDirect` client. It contains not only the result from Anura Direct, but some other methods to help you use the result.
+
+#### Methods
+**`boolean isSuspect()`**
+- Returns whether the visitor is deemed to be suspect.
+
+**`boolean isNonSuspect()`**
+- Returns whether the visitor is deemed to be non-suspect.
+
+**`Boolean isMobile()`**
+- Returns whether the visitor is demeed to be from a mobile device.
+
+**`String getResult()`**
+- Returns the result value received from Anura Direct.
+
+**`String getRuleSets()`**
+- Returns which rule set(s) indicated that a visitor should be suspect.
+- Returning rule sets requires **return rule sets** to be enabled. You can reach out to [support](mailto:support@anura.io) about enabling or disabling **return rule sets**.
+
+**`String getInvalidTrafficType()`**
+- Returns which invalid traffic type indicated that a visitor should be deemed suspect.
+- Returning invalid traffic type requires **return invalid traffic type** to be enabled. You can reach out to [support](mailto:support@anura.io) to have **return invalid traffic type** enabled.
+
+### DirectRequest
+A POJO that represents an API request to be sent to the Anura Direct API.
+
+#### Methods
+**`String getInstanceId()`**
+- Returns the Instance ID that is set within the `DirectRequest` object.
+
+**`String getSource()`**
+- Returns the source that is set within the `DirectRequest` object.
+
+**`String getCampaign()`**
+- Returns the campaign that is set within the `DirectRequest` object.
+
+**`String getIpAddress()`**
+- Returns the IP Address that is set within the `DirectRequest` object.
+
+**`String getUserAgent()`**
+- Returns the user agent that is set within the `DirectRequest` object.
+
+**`String getAppId()`**
+- Returns the application package identifier that is set within the `DirectRequest` object.
+
+**`String getDeviceId()`**
+- Returns the device identifier that is set within the `DirectRequest` object.
+
+**`HashMap<String, String> getAdditionalData()`**
+- Returns the additional data that is set within the `DirectRequest` object.
+
+**`void setInstanceId(String instanceId)`**
+- Sets the Instance ID of the `DirectRequest` object to the `instanceId` value passed.
+
+**`void setSource(String source)`**
+- Sets the source of the `DirectRequest` object to the `source` value passed.
+
+**`void setCampaign(String campaign)`**
+- Sets the campaign of the `DirectRequest` object to the `campaign` value passed.
+
+**`void setIpAddress(String ipAddress)`**
+- Sets the IP address of the `DirectRequest` object to the `ipAddress` passed.
+
+**`void setUserAgent(String userAgent)`**
+- Sets the user agent of the `DirectRequest` object to the `userAgent` passed.
+
+**`void setAppId(String appId)`**
+- Sets the application package identifier of the `DirectRequest` object to the `appId` passed.
+
+**`void setDeviceId(String deviceId)`**
+- Sets the device identifier of the `DirectRequest` object to the `deviceId` passed.'
+
+**`void setAdditionalData(HashMap<String, String> additionalData)`**
+- Sets the additional data of the `DirectRequest` object to the `additionalData` passed.
+
+### DirectRequestBuilder
+A builder class for creating a `DirectRequest`.
+
+#### Methods
+**`build()`**
+- Builds and returns the `DirectRequest` that was configured and built.
+
+**`DirectRequestBuilder setInstanceId(String instanceId)`**
+- Sets the Instance ID for the `DirectRequest` to be built. Necessary for all requests used by `AnuraDirect`.
+
+**`DirectRequestBuilder setSource(String source)`**
+- Sets the source for the `DirectRequest` to be built.
+
+**`DirectRequestBuilder setCampaign(String campaign)`**
+- Sets the campaign for the `DirectRequest` to be built.
+
+**`DirectRequestBuilder setIpAddress(String ipAddress)`**
+- Sets the IP address for the `DirectRequest` to be built.
+
+**`DirectRequestBuilder setUserAgent(String userAgent)`**
+- Sets the user agent for the `DirectRequest` to be built.
+
+**`DirectRequestBuilder setAppId(String appId)`**
+- Sets the application package identifier for the `DirectRequest` to be built.
+
+**`DirectRequestBuilder setDeviceId(String deviceId)`**
+- Sets the device identifier for the `DirectRequest` to be built.
+
+**`DirectRequestBuilder setAdditionalData(HashMap<String, String> additionalData)`**
+- Sets the additional data for the `DirectRequest` to be built.

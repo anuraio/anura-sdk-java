@@ -141,7 +141,7 @@ The result upon a successful call to `getResult()` from the `AnuraDirect` client
 - Returns whether the visitor is deemed to be non-suspect.
 
 **`Boolean isMobile()`**
-- Returns whether the visitor is demeed to be from a mobile device.
+- Returns whether the visitor is deemed to be from a mobile device.
 
 **`String getResult()`**
 - Returns the result value received from Anura Direct.

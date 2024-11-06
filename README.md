@@ -141,13 +141,13 @@ The result upon a successful call to `getResult()` from the `AnuraDirect` client
 - Returns whether the visitor is deemed to be non-suspect.
 
 **`Boolean isMobile()`**
-- Returns whether the visitor is demeed to be from a mobile device.
+- Returns whether the visitor is deemed to be from a mobile device.
 
 **`String getResult()`**
 - Returns the result value received from Anura Direct.
 
 **`String getRuleSets()`**
-- Returns which rule set(s) indicated that a visitor should be suspect.
+- Returns which rule set(s) indicated that a visitor should be deemed suspect.
 - Returning rule sets requires **return rule sets** to be enabled. You can reach out to [support](mailto:support@anura.io) about enabling or disabling **return rule sets**.
 
 **`String getInvalidTrafficType()`**
@@ -210,7 +210,7 @@ A POJO that represents an API request to be sent to the Anura Direct API.
 A builder class for creating a `DirectRequest`.
 
 #### Methods
-**`build()`**
+**`DirectRequest build()`**
 - Builds and returns the `DirectRequest` that was configured and built.
 
 **`DirectRequestBuilder setInstanceId(String instanceId)`**

@@ -6,7 +6,7 @@
 
     <groupId>io.anura</groupId>
     <artifactId>anura-sdk-java</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>The Anura SDK for Java allows developers to easily integrate and use the Anura Direct API within their Java applications.</description>

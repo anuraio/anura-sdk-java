@@ -14,7 +14,7 @@ The recommended way to use the SDK in your project is by consuming it from Maven
 <dependency>
     <groupId>io.anura</groupId>
     <artifactId>anura-sdk-java</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 

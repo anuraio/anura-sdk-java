@@ -6,23 +6,21 @@ import java.util.HashMap;
  * Builder class for creating a {@link DirectRequest}
  */
 public class DirectRequestBuilder {
-    private String instanceId;
     private String source;
     private String campaign;
     private String ipAddress;
     private String userAgent;
-    private String appId;
-    private String deviceId;
-    private HashMap<String, String> additionalData;
+    private String app;
+    private String device;
+    private HashMap<Integer, String> additionalData;
 
     public DirectRequestBuilder() {
-        this.instanceId = "";
         this.source = "";
         this.campaign = "";
         this.ipAddress = "";
         this.userAgent = "";
-        this.appId = "";
-        this.deviceId = "";
+        this.app = "";
+        this.device = "";
         this.additionalData = new HashMap<>();
     }
 
@@ -33,26 +31,14 @@ public class DirectRequestBuilder {
      */
     public DirectRequest build() {
         return new DirectRequest(
-                this.instanceId,
                 this.source,
                 this.campaign,
                 this.ipAddress,
                 this.userAgent,
-                this.appId,
-                this.deviceId,
+                this.app,
+                this.device,
                 this.additionalData
         );
-    }
-
-    /**
-     * Sets this {@link DirectRequest}'s instance ID. Necessary for all requests used by {@link AnuraDirect}
-     *
-     * @param instanceId    the instance ID to set
-     * @return              this builder
-     */
-    public DirectRequestBuilder setInstanceId(String instanceId) {
-        this.instanceId = instanceId;
-        return this;
     }
 
     /**
@@ -69,7 +55,7 @@ public class DirectRequestBuilder {
 
     /**
      * Sets this {@link DirectRequest}'s campaign.
-     * A campaign is a subset variable of "source," declared by you, to identify "campaign" traffic within Anura's dashboard interface.
+     * A campaign is a subset variable of "source", declared by you, to identify "campaign" traffic within Anura's dashboard interface.
      *
      * @param campaign      the campaign to set
      * @return              this builder
@@ -105,28 +91,28 @@ public class DirectRequestBuilder {
 
     /**
      * Sets this {@link DirectRequest}'s application package identifier.
-     * While not required, It's highly encouraged to supply an application package identifier when available
-     * as it will allow Direct to assess the visitor more accurately.
+     * While not required, it's highly encouraged to supply an application package identifier when available
+     * as it will allow Anura Direct to assess the visitor more accurately.
      * This ID may also be referred as app ID, bundle ID, package name, etc.
      *
-     * @param appId the application package identifier of your visitor
+     * @param app the application package identifier of your visitor
      * @return      this builder
      */
-    public DirectRequestBuilder setAppId(String appId) {
-        this.appId = appId;
+    public DirectRequestBuilder setApp(String app) {
+        this.app = app;
         return this;
     }
 
     /**
      * Sets this {@link DirectRequest}'s device identifier.
-     * While not required, It's highly encouraged to supply aa device identifier when available
-     * as it will allow Direct to assess the visitor more accurately.
+     * While not required, it's highly encouraged to supply a device identifier when available
+     * as it will allow Anura Direct to assess the visitor more accurately.
      *
-     * @param deviceId  the device identifier of your visitor
+     * @param device  the device identifier of your visitor
      * @return          this builder
      */
-    public DirectRequestBuilder setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public DirectRequestBuilder setDevice(String device) {
+        this.device = device;
         return this;
     }
 
@@ -138,7 +124,7 @@ public class DirectRequestBuilder {
      * @param additionalData    the additional data you would like to send
      * @return                  this builder
      */
-    public DirectRequestBuilder setAdditionalData(HashMap<String, String> additionalData) {
+    public DirectRequestBuilder setAdditionalData(HashMap<Integer, String> additionalData) {
         this.additionalData = additionalData;
         return this;
     }

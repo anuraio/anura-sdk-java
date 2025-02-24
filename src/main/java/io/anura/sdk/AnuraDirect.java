@@ -19,11 +19,15 @@ import java.util.Map;
  * An API client for Anura Direct.
  */
 public class AnuraDirect {
+    private String instance;
+    private String apiUrl;
     private boolean useHttps;
     private final Gson gson;
 
-    public AnuraDirect(boolean useHttps) {
+    public AnuraDirect(String instance, boolean useHttps) {
+        this.instance = instance;
         this.useHttps = useHttps;
+        this.apiUrl = useHttps ? "https://direct.anura.io/direct.json" : "http://direct.anura.io/direct.json";
         this.gson = new Gson();
     }
 
@@ -36,23 +40,23 @@ public class AnuraDirect {
      * @throws InterruptedException     if the request/response process with the Anura Direct API is interrupted
      * @throws AnuraException           if a 4XX, 5XX, or any unknown response is returned from Anura Direct
      */
-    public DirectResult getResult(DirectRequest directRequest) throws IOException, InterruptedException {
+    public DirectResult getResult(DirectRequest directRequest) throws IOException, InterruptedException, AnuraException {
         HttpClient client = HttpClient.newHttpClient();
         HashMap<String, String> queryParams = new HashMap<>();
 
-        if (directRequest.getInstanceId() != null && !directRequest.getInstanceId().isEmpty()) queryParams.put("instance", directRequest.getInstanceId());
+        if (this.getInstance() != null && !this.getInstance().isEmpty()) queryParams.put("instance", this.getInstance());
         if (directRequest.getSource() != null && !directRequest.getSource().isEmpty()) queryParams.put("source", directRequest.getSource());
         if (directRequest.getCampaign() != null && !directRequest.getCampaign().isEmpty()) queryParams.put("campaign", directRequest.getCampaign());
         if (directRequest.getIpAddress() != null && !directRequest.getIpAddress().isEmpty()) queryParams.put("ip", directRequest.getIpAddress());
         if (directRequest.getUserAgent() != null && !directRequest.getUserAgent().isEmpty()) queryParams.put("ua", directRequest.getUserAgent());
-        if (directRequest.getAppId() != null && !directRequest.getAppId().isEmpty()) queryParams.put("app", directRequest.getAppId());
-        if (directRequest.getDeviceId() != null && !directRequest.getDeviceId().isEmpty()) queryParams.put("device", directRequest.getDeviceId());
+        if (directRequest.getApp() != null && !directRequest.getApp().isEmpty()) queryParams.put("app", directRequest.getApp());
+        if (directRequest.getDevice() != null && !directRequest.getDevice().isEmpty()) queryParams.put("device", directRequest.getDevice());
         if (directRequest.getAdditionalData() != null && !directRequest.getAdditionalData().isEmpty()) {
             String additionalDataString = this.getAdditionalDataString(directRequest.getAdditionalData());
             queryParams.put("additional", additionalDataString);
         }
 
-        URI uri = this.buildUri(getAPIUrl(), queryParams);
+        URI uri = this.buildUri(this.apiUrl, queryParams);
         HttpRequest request = HttpRequest.newBuilder()
                         .uri(uri).GET().build();
 
@@ -87,35 +91,32 @@ public class AnuraDirect {
      */
     public void setUseHttps(boolean useHttps) {
         this.useHttps = useHttps;
+        this.apiUrl = useHttps ? "https://direct.anura.io/direct.json" : "http://direct.anura.io/direct.json";
     }
 
-    private AnuraException getAnuraException(HttpResponse<String> response) throws AnuraException {
+    public String getInstance() { return this.instance; }
+
+    public void setInstance(String instance) { this.instance = instance; }
+
+    private AnuraException getAnuraException(HttpResponse<String> response) {
         DirectError error = null;
         try {
             error = this.gson.fromJson(response.body(), DirectError.class);
         } catch (Exception ignored) {
-            return new AnuraException("Unknown error occurred.");
+            return new AnuraException("Could not parse error received from Anura Direct API.");
         }
 
         int statusCode = response.statusCode();
         if (statusCode >= 400 && statusCode <= 499) {
-            throw new AnuraClientException(error.getError());
+            return new AnuraClientException(error.getError());
         } else if (statusCode >= 500 && statusCode <= 599) {
             return new AnuraServerException("Anura Server Error: " + statusCode);
         }  else {
-            return new AnuraException("Unknown error occurred.");
+            return new AnuraException("Unknown error occurred. Status: " + statusCode);
         }
     }
 
-    private String getAPIUrl() {
-        if (this.useHttps) {
-            return "https://direct.anura.io/direct.json";
-        } else {
-            return "http://direct.anura.io/direct.json";
-        }
-    }
-
-    private String getAdditionalDataString(HashMap<String, String> additionalData) {
+    private String getAdditionalDataString(HashMap<Integer, String> additionalData) {
         return URLEncoder.encode(this.gson.toJson(additionalData), StandardCharsets.UTF_8);
     }
 

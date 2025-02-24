@@ -7,41 +7,30 @@ import java.util.HashMap;
  * It is used by {@link  AnuraDirect}
  */
 public class DirectRequest {
-    private String instanceId;
     private String source;
     private String campaign;
     private String ipAddress;
     private String userAgent;
-    private String appId;
-    private String deviceId;
-    private HashMap<String, String> additionalData;
+    private String app;
+    private String device;
+    private HashMap<Integer, String> additionalData;
 
     public DirectRequest(
-            String instanceId,
             String source,
             String campaign,
             String ipAddress,
             String userAgent,
-            String appId,
-            String deviceId,
-            HashMap<String, String> additionalData
+            String app,
+            String device,
+            HashMap<Integer, String> additionalData
     ) {
-        this.instanceId = instanceId;
         this.source = source;
         this.campaign = campaign;
         this.ipAddress = ipAddress;
         this.userAgent = userAgent;
-        this.appId = appId;
-        this.deviceId = deviceId;
+        this.app = app;
+        this.device = device;
         this.additionalData = additionalData;
-    }
-
-    public String getInstanceId() {
-        return instanceId;
-    }
-
-    public void setInstanceId(String instanceId) {
-        this.instanceId = instanceId;
     }
 
     public String getSource() {
@@ -76,27 +65,27 @@ public class DirectRequest {
         this.userAgent = userAgent;
     }
 
-    public String getAppId() {
-        return appId;
+    public String getApp() {
+        return app;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
+    public void setApp(String app) {
+        this.app = app;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getDevice() {
+        return device;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setDevice(String device) {
+        this.device = device;
     }
 
-    public HashMap<String, String> getAdditionalData() {
+    public HashMap<Integer, String> getAdditionalData() {
         return additionalData;
     }
 
-    public void setAdditionalData(HashMap<String, String> additionalData) {
+    public void setAdditionalData(HashMap<Integer, String> additionalData) {
         this.additionalData = additionalData;
     }
 }

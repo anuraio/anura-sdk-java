@@ -39,6 +39,6 @@ class AnuraDirectTest {
      additionalDataMap.put(1, "test");
      request = builder.setAdditionalData(additionalDataMap).build();
 
-     assertEquals(request.getAdditionalData().get("1"), "test");
+     assertEquals(request.getAdditionalData().get(1), "test");
     }
 }

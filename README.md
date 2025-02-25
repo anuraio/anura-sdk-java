@@ -43,6 +43,7 @@ Once installed, you are now able to use it within any of your Java projects by a
 import io.anura.sdk.*;
 import io.anura.sdk.exceptions.*;
 import java.util.HashMap;
+import java.io.IOException;
 
 AnuraDirect direct = new AnuraDirect("your-instance-id", true);
 ```
@@ -112,7 +113,7 @@ try {
 // String[] ruleSets = result.getRuleSets();
 // String trafficType = result.getInvalidTrafficType();
 
-System.out.println(result);
+// System.out.println(result);
 
 
 ```

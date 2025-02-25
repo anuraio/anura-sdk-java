@@ -15,7 +15,7 @@ class AnuraDirectTest {
         DirectRequestBuilder builder = new DirectRequestBuilder();
         DirectRequest request = builder.setIpAddress("127.0.0.1").build();
 
-        AnuraDirect direct = new AnuraDirect(true);
+        AnuraDirect direct = new AnuraDirect(null, true);
         assertThrows(AnuraClientException.class, () -> direct.getResult(request));
     }
 
@@ -23,9 +23,9 @@ class AnuraDirectTest {
     @DisplayName("Invalid Instance Should Throw Anura Client Exception")
     void invalidInstance() {
         DirectRequestBuilder builder = new DirectRequestBuilder();
-        DirectRequest request = builder.setInstanceId("abcdefg").setIpAddress("127.0.0.1").build();
+        DirectRequest request = builder.setIpAddress("127.0.0.1").build();
 
-        AnuraDirect direct = new AnuraDirect(true);
+        AnuraDirect direct = new AnuraDirect("abcdefg", true);
         assertThrows(AnuraClientException.class, () -> direct.getResult(request));
     }
 
@@ -35,8 +35,8 @@ class AnuraDirectTest {
      var builder = new DirectRequestBuilder();
      var request = builder.build();
 
-     var additionalDataMap = new HashMap<String, String>();
-     additionalDataMap.put("1", "test");
+     var additionalDataMap = new HashMap<Integer, String>();
+     additionalDataMap.put(1, "test");
      request = builder.setAdditionalData(additionalDataMap).build();
 
      assertEquals(request.getAdditionalData().get("1"), "test");

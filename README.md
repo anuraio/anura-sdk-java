@@ -14,7 +14,7 @@ The recommended way to use the SDK in your project is by consuming it from Maven
 <dependency>
     <groupId>io.anura</groupId>
     <artifactId>anura-sdk-java</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -22,6 +22,7 @@ The recommended way to use the SDK in your project is by consuming it from Maven
 Once you clone the repository, navigate to `/anura-sdk-java` and build using the appropriate command according to your operating system:
 
 Linux/Mac:
+
 ```shell
 ./mvnw clean install
 ```
@@ -42,41 +43,43 @@ Once installed, you are now able to use it within any of your Java projects by a
 import io.anura.sdk.*;
 import io.anura.sdk.exceptions.*;
 import java.util.HashMap;
+import java.io.IOException;
 
-// AnuraDirect constructor takes one parameter (a boolean) - whether to use HTTPS or not for API calls to Anura Direct.
-// If false is given to the constructor, the API client will use HTTP instead of HTTPS.
-AnuraDirect direct = new AnuraDirect(true);
+AnuraDirect direct = new AnuraDirect("your-instance-id", true);
 ```
 
 ### Create a DirectRequest object for AnuraDirect client
 
 ```java
+import java.util.HashMap;
+
 DirectRequestBuilder builder = new DirectRequestBuilder();
+HashMap<Integer, String> additionalData = new HashMap<Integer, String>();
 DirectRequest request = builder
-        .setInstanceId("your-instance-id")                  // required
         .setIpAddress("visitors-ip-address")                // required
         .setSource("your-source-value")                     // optional
         .setCampaign("your-campaign-value")                 // optional
         .setUserAgent("visitors-user-agent")                // optional
-        .setAppId("visitors-app-id")                        // optional
-        .setDeviceId("visitors-device-id")                  // optional
-        .setAdditionalData(new HashMap<String, String>())   // optional
+        .setApp("visitors-app-id")                          // optional
+        .setDevice("visitors-device-id")                    // optional
+        .setAdditionalData(additionalData)                  // optional
         .build();
 ```
 
-### Add Additional Data to a DirectRequest object
-Any time you need to add/update your additional data, pass a new `HashMap` to the request's `setAdditionalData()` method:
+### Altering Additional Data
+Any time you need to add/update your additional data, simply use the `HashMap` you passed as additional data:
 ```java
-HashMap<String,String> additionalData = new HashMap<String, String>();
-additionalData.put("1", "your-value-here");
+// Adding an element
+additionalData.put(1, "your-data-value");
 
-request.setAdditionalData(additionalData);
+// Updating an element
+additionalData.put(1, "your-new-data-value");
 ```
 
-### Remove Additional Data
-To remove all additional data that you have added, pass an empty `HashMap` to the request's `setAdditionalData()` method:
+### Remove all Additional Data
+To remove all additional data that you have added, call the `clear()` method on your additional data:
 ```java
-request.setAdditionalData(new HashMap<String, String>());
+additionalData.clear();
 ```
 
 ### Get a result from Anura Direct
@@ -110,6 +113,8 @@ try {
 // String[] ruleSets = result.getRuleSets();
 // String trafficType = result.getInvalidTrafficType();
 
+// System.out.println(result);
+
 
 ```
 ## API Reference
@@ -123,6 +128,12 @@ Can get results from Anura Direct. These results are fetched using Direct's `/di
     - `IOException`: if an I/O error occurs when sending or receiving from Anura Direct
     - `InterruptedException`: if the request/response process with the Anura Direct API is interrupted
     - `AnuraException`: if a 4XX, 5XX, or any unknown response is returned from Anura Direct
+
+**`String getInstance()`**
+- Returns the Instance ID that is set within the `AnuraDirect` instance.
+
+**`void setInstance(String instance)`**
+- Sets the Instance ID of the `AnuraDirect` instance to the `instance` value passed.
 
 **`boolean isUseHttps()`**
 - Returns whether the AnuraDirect client is using HTTPS or HTTP when calling the Anura Direct API
@@ -158,9 +169,6 @@ The result upon a successful call to `getResult()` from the `AnuraDirect` client
 A POJO that represents an API request to be sent to the Anura Direct API.
 
 #### Methods
-**`String getInstanceId()`**
-- Returns the Instance ID that is set within the `DirectRequest` object.
-
 **`String getSource()`**
 - Returns the source that is set within the `DirectRequest` object.
 
@@ -173,17 +181,14 @@ A POJO that represents an API request to be sent to the Anura Direct API.
 **`String getUserAgent()`**
 - Returns the user agent that is set within the `DirectRequest` object.
 
-**`String getAppId()`**
+**`String getApp()`**
 - Returns the application package identifier that is set within the `DirectRequest` object.
 
-**`String getDeviceId()`**
+**`String getDevice()`**
 - Returns the device identifier that is set within the `DirectRequest` object.
 
-**`HashMap<String, String> getAdditionalData()`**
+**`HashMap<Integer, String> getAdditionalData()`**
 - Returns the additional data that is set within the `DirectRequest` object.
-
-**`void setInstanceId(String instanceId)`**
-- Sets the Instance ID of the `DirectRequest` object to the `instanceId` value passed.
 
 **`void setSource(String source)`**
 - Sets the source of the `DirectRequest` object to the `source` value passed.
@@ -197,13 +202,13 @@ A POJO that represents an API request to be sent to the Anura Direct API.
 **`void setUserAgent(String userAgent)`**
 - Sets the user agent of the `DirectRequest` object to the `userAgent` passed.
 
-**`void setAppId(String appId)`**
+**`void setApp(String app)`**
 - Sets the application package identifier of the `DirectRequest` object to the `appId` passed.
 
-**`void setDeviceId(String deviceId)`**
-- Sets the device identifier of the `DirectRequest` object to the `deviceId` passed.'
+**`void setDevice(String device)`**
+- Sets the device identifier of the `DirectRequest` object to the `deviceId` passed.
 
-**`void setAdditionalData(HashMap<String, String> additionalData)`**
+**`void setAdditionalData(HashMap<Integer, String> additionalData)`**
 - Sets the additional data of the `DirectRequest` object to the `additionalData` passed.
 
 ### DirectRequestBuilder
@@ -212,9 +217,6 @@ A builder class for creating a `DirectRequest`.
 #### Methods
 **`DirectRequest build()`**
 - Builds and returns the `DirectRequest` that was configured and built.
-
-**`DirectRequestBuilder setInstanceId(String instanceId)`**
-- Sets the Instance ID for the `DirectRequest` to be built. Necessary for all requests used by `AnuraDirect`.
 
 **`DirectRequestBuilder setSource(String source)`**
 - Sets the source for the `DirectRequest` to be built.
@@ -228,11 +230,11 @@ A builder class for creating a `DirectRequest`.
 **`DirectRequestBuilder setUserAgent(String userAgent)`**
 - Sets the user agent for the `DirectRequest` to be built.
 
-**`DirectRequestBuilder setAppId(String appId)`**
+**`DirectRequestBuilder setApp(String app)`**
 - Sets the application package identifier for the `DirectRequest` to be built.
 
-**`DirectRequestBuilder setDeviceId(String deviceId)`**
+**`DirectRequestBuilder setDevice(String device)`**
 - Sets the device identifier for the `DirectRequest` to be built.
 
-**`DirectRequestBuilder setAdditionalData(HashMap<String, String> additionalData)`**
+**`DirectRequestBuilder setAdditionalData(HashMap<Integer, String> additionalData)`**
 - Sets the additional data for the `DirectRequest` to be built.

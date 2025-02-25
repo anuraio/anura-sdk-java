@@ -6,6 +6,7 @@ import io.anura.sdk.exceptions.AnuraException;
 import io.anura.sdk.exceptions.AnuraServerException;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -125,10 +126,16 @@ public class AnuraDirect {
         sb.append("?");
 
         for (Map.Entry<String, String> entry: queryParams.entrySet()) {
-            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            boolean shouldEncode = (!entry.getKey().equals("ip") && !entry.getKey().equals("instance"));
+
+            sb.append(entry.getKey())
+                .append("=")
+                .append(
+                    shouldEncode ? URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8) : entry.getValue()
+                )
+                .append("&");
         }
 
-        // Removing the trailing "&" at the end of the URI String.
         sb.deleteCharAt(sb.length() - 1);
 
         return URI.create(sb.toString());

@@ -127,7 +127,7 @@ String anuraResult = result.getResult();
 String invalidTrafficType = result.getInvalidTrafficType();
 
 System.out.println("Visitor Result: " + anuraResult);
-System.out.println("Invalid Traffic Type" + invalidTrafficType);
+System.out.println("Invalid Traffic Type: " + invalidTrafficType);
 ```
 ## API Reference
 ### AnuraDirect

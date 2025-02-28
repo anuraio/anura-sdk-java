@@ -44,6 +44,7 @@ import io.anura.sdk.*;
 import io.anura.sdk.exceptions.*;
 import java.util.HashMap;
 import java.io.IOException;
+import java.util.Arrays;
 
 AnuraDirect direct = new AnuraDirect("your-instance-id", true);
 ```
@@ -104,18 +105,29 @@ try {
 }
 
 // We successfully got a result! See below for available methods for DirectResult objects.
+if (result.isSuspect()) {
+    // Perform some logic only for suspect visitors    
+}
 
-// result.isSuspect();
-// result.isNonSuspect();
-// result.isMobile();
+if (result.isNonSuspect()) {
+    // Perform some logic only for non-suspect visitors    
+}
 
-// String visitorResult = result.getResult();
-// String[] ruleSets = result.getRuleSets();
-// String trafficType = result.getInvalidTrafficType();
+if (result.isMobile()) {
+    // Perform some logic only for visitors on mobile devices    
+}
 
-// System.out.println(result);
+String[] ruleSets = result.getRuleSets();
+boolean isWebCrawler = (ruleSets != null && Arrays.asList(ruleSets).contains("WC"));
+if (isWebCrawler) {
+    // Perform some logic only for web crawlers    
+}
 
+String anuraResult = result.getResult();
+String invalidTrafficType = result.getInvalidTrafficType();
 
+System.out.println("Visitor Result: " + anuraResult);
+System.out.println("Invalid Traffic Type: " + invalidTrafficType);
 ```
 ## API Reference
 ### AnuraDirect
